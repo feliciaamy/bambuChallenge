@@ -103,7 +103,7 @@ module.exports = {
           });
           result.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
 
-          resolve(result.slice(0, 10));
+          resolve({ peopleLikeYou: result.slice(0, 10) });
         })
         .catch(err => {
           reject(err);
