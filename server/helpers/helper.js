@@ -36,6 +36,7 @@ function calculateMatch(person, query) {
   return Math.round((total / count) * 100) / 100;
 }
 module.exports = {
+  calculateMatch,
   findMatch: query => {
     return new Promise((resolve, reject) => {
       logger.info(query);
