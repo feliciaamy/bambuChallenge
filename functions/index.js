@@ -20,9 +20,6 @@ app.use(bodyparser.urlencoded({ extended: true, limit: "2mb" }));
 
 app.use("/", routes);
 app.get("/healthcheck", healthcheck());
-app.get("/test", function(req, res, next) {
-  res.send("testing ok");
-});
 
 app.use(function(err, req, res, next) {
   logger.error(JSON.stringify(err));
