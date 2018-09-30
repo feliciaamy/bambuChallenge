@@ -125,3 +125,7 @@ Give you the uptime of the hosting server
             }
         ]
     }
+
+## Extra Feature
+
+Added caching for the endpoint people-like-you
