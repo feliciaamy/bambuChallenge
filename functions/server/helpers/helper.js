@@ -35,63 +35,64 @@ function calculateMatch(person, query) {
   }
   return Math.round((total / count) * 100) / 100;
 }
+
+function parseQuery(query) {
+  let tolerate = false;
+  let slack = 5;
+  let filter = { $and: [] };
+
+  if (query.age !== undefined) {
+    filter.$and.push({
+      age: { $gte: query.age - slack, $lte: parseInt(query.age) + slack }
+    });
+  }
+
+  if (query.latitude !== undefined) {
+    filter.$and.push({
+      latitude: {
+        $gte: query.latitude - slack,
+        $lte: parseFloat(query.latitude) + slack
+      }
+    });
+    tolerate = true;
+  }
+  if (query.longitude !== undefined) {
+    filter.$and.push({
+      longitude: {
+        $gte: query.longitude - slack,
+        $lte: parseFloat(query.longitude) + slack
+      }
+    });
+    tolerate = true;
+  }
+  if (query.monthlyIncome !== undefined) {
+    filter.$and.push({
+      monthlyIncome: {
+        $gte: query.monthlyIncome - slack * 100,
+        $lte: parseFloat(query.monthlyIncome) + slack * 100
+      }
+    });
+  }
+  if (query.experienced !== undefined) {
+    if (!tolerate) {
+      filter.$and.push({
+        experienced: query.experienced
+      });
+    }
+  }
+  return filter;
+}
 module.exports = {
+  parseQuery,
   calculateMatch,
   findMatch: function(query) {
     return new Promise(function(resolve, reject) {
-      logger.info(query);
-      let tolerate = false;
-      let slack = 5;
-      let filter = { $and: [] };
-
-      if (query.age !== undefined) {
-        filter.$and.push({
-          age: { $gte: query.age - slack, $lte: parseInt(query.age) + slack }
-        });
-      }
-
-      if (query.latitude !== undefined) {
-        filter.$and.push({
-          latitude: {
-            $gte: query.latitude - slack,
-            $lte: parseFloat(query.latitude) + slack
-          }
-        });
-        tolerate = true;
-      }
-      if (query.longitude !== undefined) {
-        filter.$and.push({
-          longitude: {
-            $gte: query.longitude - slack,
-            $lte: parseFloat(query.longitude) + slack
-          }
-        });
-        tolerate = true;
-      }
-      if (query.monthlyIncome !== undefined) {
-        filter.$and.push({
-          monthlyIncome: {
-            $gte: query.monthlyIncome - slack * 100,
-            $lte: parseFloat(query.monthlyIncome) + slack * 100
-          }
-        });
-      }
-      if (query.experienced !== undefined) {
-        if (!tolerate) {
-          filter.$and.push({
-            experienced: query.experienced
-          });
-        }
-      }
-      logger.info(filter);
-      let promiseArray = [];
+      filter = parseQuery(query);
       People.find(filter, { _id: 0 })
         .exec()
         .then(function(doc) {
-          logger.info(doc.length);
           let result = [];
           doc.forEach(function(person) {
-            logger.info(person);
             result.push({
               name: person.name,
               age: person.age,

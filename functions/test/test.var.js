@@ -15,6 +15,7 @@ module.exports = {
     monthlyIncome: 14000,
     experienced: true
   },
+
   query1: {
     age: 20,
     latitude: 50,
@@ -24,5 +25,49 @@ module.exports = {
   },
   query2: {
     age: 0
+  },
+  query3: {
+    age: 23
+  },
+  query4: {
+    age: 23,
+    experienced: true
+  },
+  query5: {
+    age: 23,
+    monthlyIncome: 1000,
+    experienced: true
+  },
+  query6: {
+    age: 23,
+    latitude: 50,
+    experienced: true
+  },
+  filter1: {
+    $and: [{ age: { $gte: 18, $lte: 28 } }]
+  },
+  filter2: {
+    $and: [
+      { age: { $gte: 15, $lte: 25 } },
+      { latitude: { $gte: 45, $lte: 55 } },
+      { longitude: { $gte: 35, $lte: 45 } },
+      { monthlyIncome: { $gte: 10500, $lte: 11500 } }
+    ]
+  },
+  filter3: {
+    $and: [{ age: { $gte: 18, $lte: 28 } }, { experienced: true }]
+  },
+  filter4: {
+    $and: [
+      { age: { $gte: 18, $lte: 28 } },
+      { monthlyIncome: { $gte: 500, $lte: 1500 } },
+      { experienced: true }
+    ]
+  },
+  filter5: {
+    $and: [
+      { age: { $gte: 18, $lte: 28 } },
+      { latitude: { $gte: 45, $lte: 55 } }
+    ]
   }
 };
