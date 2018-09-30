@@ -82,9 +82,28 @@ function parseQuery(query) {
   }
   return filter;
 }
+// ******************************
+// Def: Will sort people by score
+// Params:
+//  People: {
+//      name: String,
+//      age: Number,
+//      latitude: Number,
+//      longitude: Number,
+//      monthlyIncome: Number,
+//      experienced: Boolean,
+//      score: Float
+// }
+function sortPeople(people) {
+  const sorted = people.sort(function(a, b) {
+    return b.score - a.score;
+  });
+  return sorted;
+}
 module.exports = {
   parseQuery,
   calculateMatch,
+  sortPeople,
   findMatch: function(query) {
     return new Promise(function(resolve, reject) {
       filter = parseQuery(query);
@@ -103,10 +122,7 @@ module.exports = {
               score: calculateMatch(person, query)
             });
           });
-          result.sort(function(a, b) {
-            parseFloat(b.score) - parseFloat(a.score);
-          });
-
+          result = sortPeople(result);
           resolve({ peopleLikeYou: result.slice(0, 10) });
         })
         .catch(function(err) {

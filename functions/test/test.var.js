@@ -69,5 +69,19 @@ module.exports = {
       { age: { $gte: 18, $lte: 28 } },
       { latitude: { $gte: 45, $lte: 55 } }
     ]
-  }
+  },
+  people: [
+    { name: "person1", score: 0.5 },
+    { name: "person2", score: 0.6 },
+    { name: "person3", score: 1 },
+    { name: "person4", score: 0.2 },
+    { name: "person5", score: 0.9 }
+  ],
+  peopleSorted: [
+    { name: "person3", score: 1 },
+    { name: "person5", score: 0.9 },
+    { name: "person2", score: 0.6 },
+    { name: "person1", score: 0.5 },
+    { name: "person4", score: 0.2 }
+  ]
 };

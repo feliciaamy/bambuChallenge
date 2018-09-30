@@ -50,3 +50,9 @@ describe("Parse Query Testing", function() {
     assert.deepEqual(helper.parseQuery(testVar.query6), testVar.filter5);
   });
 });
+
+describe("Score Sorting Testing", function() {
+  it("should return a list with sorted score (decending order)", function() {
+    assert.deepEqual(helper.sortPeople(testVar.people), testVar.peopleSorted);
+  });
+});
